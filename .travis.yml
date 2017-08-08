@@ -25,16 +25,17 @@ before_install:
 script:
 - sh travis_scripts/tag_build.sh
 # - sh travis_scripts/build_services.sh
+- sh travis_scripts/build_deploy_to_docker_hub.sh
 # - sh travis_scripts/deploy_to_docker_hub.sh
 # - sh travis_scripts/deploy_to_amazon_ecs.sh
-after_success:
-  - docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
-  - export REPO=$DOCKER_USERNAME/gs-spring-boot
-  - export TAG=`if [ "$TRAVIS_BRANCH" == "master" ]; then echo "latest"; else echo $TRAVIS_BRANCH ; fi`
-  - docker build -f Dockerfile -t $REPO:$COMMIT .
-  - docker tag $REPO:$COMMIT $REPO:$TAG
-  - docker tag $REPO:$COMMIT $REPO:travis-$TRAVIS_BUILD_NUMBER
-  - docker push $REPO
+#after_success:
+#  - docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
+#  - export REPO=$DOCKER_USERNAME/gs-spring-boot
+#  - export TAG=`if [ "$TRAVIS_BRANCH" == "master" ]; then echo "latest"; else echo $TRAVIS_BRANCH ; fi`
+#  - docker build -f Dockerfile -t $REPO:$COMMIT .
+#  - docker tag $REPO:$COMMIT $REPO:$TAG
+#  - docker tag $REPO:$COMMIT $REPO:travis-$TRAVIS_BUILD_NUMBER
+#  - docker push $REPO
 env:
   global:
   - secure: RLu7AtIWJ2wqGWIzMam3KMhz1v9IZr1kCS+LhwYgGwodKAhoA/YLTpgEGM3HU+raJPs2dae+yejJs58ReBri/in6NLQGGL8RNRaQyKCrwxPI9AU2bpzcVSuLBFibBcRc6yBVENsKWwz+Wj364g6x+hlfnciXEapylIKHKo+xLInSI5c2KCurUPoI+sgZXKgZmkLbYPJ4/PYTSyAPq9s2kdhwvyRpENnfy03U2ztuV9sN/UTQtVDEJkGg5bgegiorG/HkSas3zbgjWeicf09vk6DQWwDoPip+fAFTOhbrUgh63QYqghfAf9txzfkdaSINi08DfVGe2yTktMyHJgbfYd5MptwwlhgYz3By4qGOpUgaJJq0HSL+CWC5vYjAB5WAozTV0GCJse+YVgcvNyZX/kzU3kqPcX0OkJUa+1lgXgDjlO9/W6JuwpobLhgTuGIvgr4xi95VL/7nJbNOPfjGhzo5daNNIBtj/tmnzJAojE3loO0jMus8i/o10c1g87viMZzQ1NOKPhkf8C/9SLw/0dHUGx+Bt/vzr5QD1d2Ig9Fq7WpRjsKjgOCtgeICYmNVTCi29YkhFAbl1V6K7sX4+ek6RpLJpu8fK12ImeBMl+6rluA0lZXZB7xw5Gc5LgAKzCkPsLxevwaF9eUfS5G1bK6FjftqW6V0Ux7+L9Pyhhc=
