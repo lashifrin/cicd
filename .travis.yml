@@ -1,0 +1,34 @@
+language: java
+jdk:
+- openjdk:8-jdk-alpine
+cache:
+  directories:
+  - "$HOME/.m2"
+sudo: required
+services:
+- docker
+notifications:
+  email:
+  - lashifrin@gmail.com
+  on_success: always
+  on_failure: always
+branches:
+  only:
+  - master
+before_install:
+- gem install travis -v 1.8.5 --no-rdoc --no-ri
+# - sudo curl -k -o /usr/local/bin/ecs-cli https://s3.amazonaws.com/amazon-ecs-cli/ecs-cli-linux-amd64-latest
+# - sudo chmod +x /usr/local/bin/ecs-cli
+- export BUILD_NAME=gs-spring-boot-$(date -u "+%Y%m%d%H%M%S")-$TRAVIS_BUILD_NUMBER
+# - export CONTAINER_IP=54.215.193.139
+# - export PLATFORM_TEST_NAME="chapter10-platform-tests"
+script:
+- sh travis_scripts/tag_build.sh
+- sh travis_scripts/build_services.sh
+- sh travis_scripts/deploy_to_docker_hub.sh
+# - sh travis_scripts/deploy_to_amazon_ecs.sh
+env:
+  global:
+  - secure: RLu7AtIWJ2wqGWIzMam3KMhz1v9IZr1kCS+LhwYgGwodKAhoA/YLTpgEGM3HU+raJPs2dae+yejJs58ReBri/in6NLQGGL8RNRaQyKCrwxPI9AU2bpzcVSuLBFibBcRc6yBVENsKWwz+Wj364g6x+hlfnciXEapylIKHKo+xLInSI5c2KCurUPoI+sgZXKgZmkLbYPJ4/PYTSyAPq9s2kdhwvyRpENnfy03U2ztuV9sN/UTQtVDEJkGg5bgegiorG/HkSas3zbgjWeicf09vk6DQWwDoPip+fAFTOhbrUgh63QYqghfAf9txzfkdaSINi08DfVGe2yTktMyHJgbfYd5MptwwlhgYz3By4qGOpUgaJJq0HSL+CWC5vYjAB5WAozTV0GCJse+YVgcvNyZX/kzU3kqPcX0OkJUa+1lgXgDjlO9/W6JuwpobLhgTuGIvgr4xi95VL/7nJbNOPfjGhzo5daNNIBtj/tmnzJAojE3loO0jMus8i/o10c1g87viMZzQ1NOKPhkf8C/9SLw/0dHUGx+Bt/vzr5QD1d2Ig9Fq7WpRjsKjgOCtgeICYmNVTCi29YkhFAbl1V6K7sX4+ek6RpLJpu8fK12ImeBMl+6rluA0lZXZB7xw5Gc5LgAKzCkPsLxevwaF9eUfS5G1bK6FjftqW6V0Ux7+L9Pyhhc=
+  - secure: gudC5hoCXce2hwhwqcJ9znXYrhrPM3vlafFmS6Gfe8BrmDJlbxlKG31dIMsxKFWMopOssGd7T/BAz11u+n9kS8LRBC17I/Z4pRxK54gkYic/IdnjPvueV6qO5DkyHueeSnHmtpte60ysPM2aCouxh6840mITs6hfTmaMa6uLW9zK0pCtvK6g051CzUaScT5bKKdi8zsikxwtOS3ubWiGgUfSHwv1C65Cux+tgs2hHUrAkDXjchsP7YzO0Bm24L/q2xxjNPfPSH1QQcAY2bMSEP0zunoXpR/LEiRuRdqW/G2V2v8XsyTJdIGIzeX0+5zgjnkQIzerXZ6myS7whxOCCkp6jBFu/mI3DN7QSEVO0ftPTj9O81SI04b2W5DgshZsYYfOQY67NTxNBhLPH+MOp0cWlJVSr9VZTz8r7V+SKCmDQ8Dfzp573X51wwmnFt/ANXzj8h5IBk3Aj6FgGTx8+Rne3/vNjzCNQqV1yphFEtejY2Sw/ZZnYKP94WuLjAB3D3TJ+MMF/RkW+nONUki5y5j416kZIFUnLWGtMWcYsS0mibVXc4h2/+5SAN7anCBbzWIzu9ivwlZ9w2yX5Ukm6GvCZJrevkwomB4Iv1HTSkGpvoyoP80Ung1WK6Aau/5w1a6IPCrklmfHlZI3TchqJq8NllFgwl36GelpZ5RDCHM=
+  - secure: GQ/K0MXZ1EA1cqWBqFrt6f70g5SyWyOIC9O8eZSQW5tBPnH1KEh6y1NiVU+k+QqLWWqnnCB/Uq8Q+n+AMEMqbSnO8caq1aTTK6u167w5At1Txo8AfWk7LxAhjwQf30HNBExuUHChNkj5NSg5ulDY5uhrsmquVxRS/w6DiWoU+8QuMPLB1xEtqwML2/vuXGh5p6Yfl992uyNAwxHTTMxWfqVclLqdd9DX3PWufYDju6hOMd6tGcGYbmpnwRgwBBRt9kRZOHntz571Hjv4gc8JptzBUMdVQ+c3nm75odNbM3kwj0S4cuyz9hYgHQ6rlm/NvUvNjosfLNrzKSrOhGV18kfCUWp+3y30y9L/nwiftP8byEvikpv+NgNUMD0dBXCNKiInLqe8ge92oCi8lD1atijpxBwx/kLafFolRy8aS3tjnLSql00qbJounldJCW8V3RLF3kNZ5VfP1NM5eerx04cuQbd8/NgHTFSvu+BD/EAjalUk+Fr1lea0f36pskdxv5fARAJ8s4dpN6VhCHyR8Me4nOKD/kkYx7oTBK/wICdpKVneOVY5YtdIYGmK6aDdwFINkHRyxTh05Ox4uQ6vkLN4aVFxfCUSp8WBo/37WThFjLX7Ki6GGWUyo5Akl0m1pRymTvhgfIk9psE2FqX0A1uYLG8UkurJ1yB21HtY2xk=
