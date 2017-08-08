@@ -57,9 +57,13 @@
             </plugin>
             <plugin>
                 <groupId>com.spotify</groupId>
-                <artifactId>dockerfile-maven-plugin</artifactId>
-                <version>1.3.4</version>
+                <!-- <artifactId>dockerfile-maven-plugin</artifactId> -->
+                <artifactId>docker-maven-plugin</artifactId>
+                <!-- <version>1.3.4</version> -->
+                <version>0.4.10</version>
                 <configuration>
+                     <baseImage>java</baseImage>
+                     <imageName>example</imageName>
                      <repository>${docker.image.prefix}/${project.artifactId}</repository>
                 </configuration>
             </plugin>
