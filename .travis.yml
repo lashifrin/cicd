@@ -22,6 +22,7 @@ before_install:
 - export BUILD_NAME=gs-spring-boot-$(date -u "+%Y%m%d%H%M%S")-$TRAVIS_BUILD_NUMBER
 script:
 - sh travis_scripts/tag_build.sh
+- sh travis_scripts/build_services.sh
 - sh travis_scripts/build_deploy_to_docker_hub.sh
 - sh travis_scripts/deploy_to_amazon_ecs.sh
 env:
