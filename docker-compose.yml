@@ -1,5 +1,5 @@
 springboot:
-   image:   leonid30022/gs-spring-boot:${BUILD_NAME}  
+   image:   leonid30022/gs-spring-boot
    mem_limit: 1073741824
    ports:
      - "8080:8080"
