@@ -20,14 +20,13 @@ before_install:
 - sudo curl -k -o /usr/local/bin/ecs-cli https://s3.amazonaws.com/amazon-ecs-cli/ecs-cli-linux-amd64-latest
 - sudo chmod +x /usr/local/bin/ecs-cli
 - export BUILD_NAME=gs-spring-boot-$(date -u "+%Y%m%d%H%M%S")-$TRAVIS_BUILD_NUMBER
-- install: pip install httplib2
 - CONTAINER_IP=34.231.243.25
 script:
 - sh travis_scripts/tag_build.sh
 - sh travis_scripts/build_services.sh
 - sh travis_scripts/build_deploy_to_docker_hub.sh
 - sh travis_scripts/deploy_to_amazon_ecs.sh
-- python test_platform.py
+- sh travis_scripts/platform_tests.sh
 env:
   global:
   - secure: D+Et5CXJYZDc6sEq5+aAYahw8kUmqwGq61y1R1Mjuoa1LqRzL41u9Vn3lZ6qpec1vWBMXbWlgwpProOpon+afefIwfB8+xS2flbvlYsLcrIyi1qSgPF2zqfBkEKo/azdcbdQ0Cm3EEMXQE7wnX8Dg4EmmP4AHZbi0wetwTH4cbLJksDJcSzQ3NY7UrWIEpXnGOjrhKhvCn4onK3bpsotyTPrf7Y6BrVGaWhcXj/yWdZV1zSRZPVOnShynl4cDJkQDFZWLEoea29qaQr+SQSxyc0Jr7lBOUML8YN578ddOJlzBh6Df+F6TAu9SYHm+yuEyAfLXKycHBIZcdTyg5nOA95Jzs1uyuuMia1j7DF0o1GVfqcWIfYyiarqfb/a+siiquen186U2f2HdH+Rxsz57k1RT+VVX0fY6iuHWXg0H2ZwT+qTGqnKgDRiQSjFolMW2DGhbN01JFzyiOGhEMIwEOPGiO6uqmAugxK1SzznRAUikoOTMynfDbzzZ+ovzwTroNN20m9BeJKiBNk8whpwfm7qd0q8oErL7XGNvhYcTBHM0GIxBH2sS8AsWSP/gGaSYahNZWaMEcF5Q3Y9+Tu3p/9JgJnOaTexpuLGsuKN9BTv1rOfS5GWbdFtekVq0FmxWaFDcd3kGT+sYVHi9FlL9AFhVsrSFnA8CgzVeg8vHSQ=
