@@ -22,7 +22,7 @@ public class HelloControllerIT {
     @LocalServerPort
     private int port;
 
-    private URL base;
+    private URL base, demo;
 
     @Autowired
     private TestRestTemplate template;
@@ -30,12 +30,20 @@ public class HelloControllerIT {
     @Before
     public void setUp() throws Exception {
         this.base = new URL("http://localhost:" + port + "/");
+        this.demo = new URL("http://localhost:" + port + "/demo");
     }
 
     @Test
     public void getHello() throws Exception {
         ResponseEntity<String> response = template.getForEntity(base.toString(),
                 String.class);
-        assertThat(response.getBody(), equalTo("Greetings from Spring Boot/v2!"));
+        assertThat(response.getBody(), equalTo("Greetings from Spring Boot!"));
+    }
+
+    @Test
+    public void getDemo() throws Exception {
+        ResponseEntity<String> response = template.getForEntity(demo.toString(),
+                String.class);
+        assertThat(response.getBody(), equalTo("This one is a demo!"));
     }
 }
