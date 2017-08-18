@@ -13,6 +13,6 @@ public class HelloController {
 
     @RequestMapping("/demo")
     public String demo() {
-        return "This one is a demo!";
+        return "This one is a office demo!";
     }
 }

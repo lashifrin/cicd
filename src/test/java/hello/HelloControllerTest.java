@@ -33,6 +33,6 @@ public class HelloControllerTest {
     public void getDemo() throws Exception {
         mvc.perform(MockMvcRequestBuilders.get("/demo").accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(content().string(equalTo("This one is a demo!")));
+                .andExpect(content().string(equalTo("This one is a office demo!")));
     }
 }

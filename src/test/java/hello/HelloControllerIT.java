@@ -44,6 +44,6 @@ public class HelloControllerIT {
     public void getDemo() throws Exception {
         ResponseEntity<String> response = template.getForEntity(demo.toString(),
                 String.class);
-        assertThat(response.getBody(), equalTo("This one is a demo!"));
+        assertThat(response.getBody(), equalTo("This one is a office demo!"));
     }
 }
